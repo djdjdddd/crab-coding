@@ -1,10 +1,10 @@
 # [Mobile App] 주식 종토방
 
 ### 목차
-- [프로젝트 소개](#introduction)
-- [기술 스택](#tech-stacks)
-- [구현 서비스](#our-services)
-- [멤버](#members)
+- [프로젝트 소개](#-introduction)
+- [기술 스택](#-tech-stacks)
+- [구현 서비스](#-our-services)
+- [멤버](#-members)
 
 ![mobile_app](https://github.com/djdjdddd/crab-coding/assets/126077503/bd9c8b49-e6e6-464f-be54-e333b7eb6950)
 
