@@ -1,5 +1,5 @@
 # [Mobile App] 주식 종토방
-![mobile_app.jpeg](..%2F..%2FDesktop%2FREADME%EC%9A%A9%20img%2Fmobile_app.jpeg)
+![mobile_app](https://github.com/djdjdddd/crab-coding/assets/126077503/bd9c8b49-e6e6-464f-be54-e333b7eb6950)
 
 ### 목차
 - [프로젝트 소개](#introduction)
