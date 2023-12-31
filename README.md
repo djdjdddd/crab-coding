@@ -48,5 +48,5 @@ JWT
 ## 💑 Members
 |김용희|오세솔|김지수|남유지|     
 | :----: | :-----: | :------: | :----: |
-|![](https://github.com/djdjdddd.png?size=120) |![](https://github.com/djdjdddd.png?size=120) | ![](https://github.com/djdjdddd.png?size=120) | ![](https://github.com/djdjdddd.png?size=120) | ![](https://github.com/ehopaak.png?size=120)
+|![](https://github.com/djdjdddd.png?size=120) | ![OhSeSol](https://github.com/djdjdddd/crab-coding/assets/126077503/274ba4cd-723e-44b8-88c7-4f776902bc94) | ![CHITSOO](https://github.com/djdjdddd/crab-coding/assets/126077503/652a5d0a-9144-4909-8e1f-0d24a6be27ba) | ![namyj](https://github.com/djdjdddd/crab-coding/assets/126077503/4ba97702-59d4-4f9c-a59d-0e52f68e3b7a) | 
 |  [djdjdddd](https://github.com/djdjdddd)  |  [OhSeSol](https://github.com/OhSeSol)  |  [CHITSOO](https://github.com/CHITSOO)  |  [namyj](https://github.com/namyj)  | 
