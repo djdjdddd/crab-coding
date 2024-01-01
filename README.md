@@ -1,17 +1,36 @@
 # [Mobile App] 주식 종토방
+![mobile_app](https://github.com/djdjdddd/crab-coding/assets/126077503/bd9c8b49-e6e6-464f-be54-e333b7eb6950)
 
-### 목차
+<br/>
+
+## 📚 Contents 
 - [프로젝트 소개](#-introduction)
 - [기술 스택](#-tech-stacks)
 - [구현 서비스](#-our-services)
 - [멤버](#-members)
 
-![mobile_app](https://github.com/djdjdddd/crab-coding/assets/126077503/bd9c8b49-e6e6-464f-be54-e333b7eb6950)
+<br/>
 
-## 📑 Introduction
-프로젝트명이 `crab-coding(꽃게 코딩)`인 이유
+## 📋 Introduction
+
+### 1. 프로젝트명 
+- `crab-coding(꽃게 코딩)`
 - **제철 꽃게처럼 속이 꽉찬 코드를 짠다.**
 - 기능 구현에 집착하기보단 해당 구현을 위해 필요한 기술을 완벽히 익히고 문서화하여 제대로 된 개발 소양을 갈고 닦기 위함.
+
+### 2. 프로젝트 주제
+- [Mobile App] 주식 종토방
+- 네이버 증권의 종목토론방(=종토방)을 오픈채팅방(ex. 카카오톡, 자소설닷컴) 형태로 구현한 모바일 앱
+
+### 3. 프로젝트 목적
+- (1) 공부
+  - 서비스 구현에 필요한 기술을 왜/어떻게 사용해야 하는지 명확히 알고, 이를 문서화
+  - 코드 리뷰
+- (2) 배포
+  - 구글/앱 스토어에 배포하여 최소 100회 이상 다운로드 수 확보
+  - CI/CD 경험     
+
+<br/>
 
 ## 🔨 Tech Stacks
 | 항목       | 내용                                                                            |
@@ -38,6 +57,8 @@ JUnit, Mock
 
 JWT
 
+<br/>
+
 ## 💻 Our Services
 ### 1. Sign Up & Sign In
 - 메일 인증
@@ -45,6 +66,8 @@ JWT
 ### 2. Chatting
 - 네이버 증권의 종목토론방 &rightarrow; 오픈채팅방 형태로 구현 
 ### 3. CI/CD
+
+<br/>
 
 ## 💑 Members
 |김용희|오세솔|김지수|남유지|     
