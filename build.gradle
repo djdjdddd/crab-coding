@@ -40,8 +40,8 @@ dependencies {
 //	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
 
 	// Spring Security
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	testImplementation 'org.springframework.security:spring-security-test'
+//	implementation 'org.springframework.boot:spring-boot-starter-security'
+//	testImplementation 'org.springframework.security:spring-security-test'
 
 	// Websocket
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
@@ -66,6 +66,12 @@ dependencies {
 
 	// H2
 	runtimeOnly 'com.h2database:h2'
+
+	// 이메일 인증
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	// Redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 tasks.named('test') {
