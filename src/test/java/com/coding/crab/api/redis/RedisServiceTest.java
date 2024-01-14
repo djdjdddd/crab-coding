@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.Duration;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 
 @Slf4j
 @SpringBootTest
@@ -42,7 +43,47 @@ public class RedisServiceTest {
 
         // then
         assertThat(VALUE).isEqualTo(findValue);
+    }
 
-        log.debug("??");
+    @Test
+    @DisplayName("Redis에 저장된 데이터를 수정할 수 있다.")
+    void updateTest(){
+        // given
+        String updateValue = "updateValue";
+        redisService.setValues(KEY, updateValue, DURATION);
+
+        // when
+        String findValue = redisService.getValues(KEY);
+
+        // then
+        assertThat(updateValue).isEqualTo(findValue);
+        assertThat(VALUE).isNotEqualTo(findValue);
+    }
+
+    @Test
+    @DisplayName("Redis에 저장된 데이터를 삭제할 수 있다.")
+    void deleteTest(){
+        // when
+        redisService.deleteValues(KEY);
+        String findValue = redisService.getValues(KEY);
+
+        // then
+        assertThat(findValue).isEqualTo("false");
+    }
+
+    @Test
+    @DisplayName("Redis에 저장된 데이터는 만료시간이 지나면 삭제된다.")
+    void expiredTest(){
+        // when
+        String findValue = redisService.getValues(KEY);
+
+        // 이 테스트는 제대로 작동 안하는거 같은데...
+        await().pollDelay(Duration.ofMillis(1000)).untilAsserted(
+                () -> {
+                    String expiredValue = redisService.getValues(KEY);
+                    assertThat(expiredValue).isNotEqualTo(findValue);
+                    assertThat(expiredValue).isEqualTo("false");
+                }
+        );
     }
 }
