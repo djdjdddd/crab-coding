@@ -67,7 +67,7 @@ dependencies {
 	// H2
 	runtimeOnly 'com.h2database:h2'
 
-	// 이메일 인증
+	// Java Mail Sender (메일 인증에 사용)
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 
 	// Redis
