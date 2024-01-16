@@ -23,10 +23,6 @@ public class RedisService {
 
     private final StringRedisTemplate stringRedisTemplate;
 
-//    private RedisService(){
-//        this.redisTemplate = new RedisTemplate<>();
-//    }
-
     // key와 data를 Redis에 저장한다. 만약 데이터에 만료 시간을 설정하고 싶다면 세 번째 파라미터로 Duration 객체를 전달한다.
     public  void setValues(String key, String data){
         ValueOperations values = stringRedisTemplate.opsForValue();
