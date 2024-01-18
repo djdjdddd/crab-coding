@@ -24,7 +24,8 @@ public class SignupController {
         
         MailDTO mailDTO = new MailDTO();
         mailDTO.setUserName("김용희");
-        mailDTO.setUserMail("djdjdddd@khu.ac.kr");
+        mailDTO.setUserMail("jisu3148496@naver.com");
+//        mailDTO.setUserMail("djdjdddd@khu.ac.kr");
 //        mailDTO.setUserMail("hjmin1221@naver.com");
 
         //
