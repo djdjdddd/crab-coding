@@ -4,6 +4,6 @@ sudo docker rmi ohsesol/crab-coding-spring
 
 sudo docker pull ohsesol/crab-coding-spring
 
-docker run -d -p 8080:8080 --env-file=env_list.txt --name app ohsesol/crab-coding-spring
+docker run -d -p 80:8080 --name app ohsesol/crab-coding-spring
 
 docker rmi -f $(docker images -f "dangling=true" -q) || true
