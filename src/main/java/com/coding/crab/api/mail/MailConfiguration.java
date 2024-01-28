@@ -9,9 +9,8 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import java.util.Properties;
 
 @Configuration
-public class MailConfig {
+public class MailConfiguration {
 
-    // 그러면 롬복의 @Value는 어느 용도로 쓰이는 거지??
     @Value("${spring.mail.host}")
     private String host;
 

@@ -57,6 +57,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	// Redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	// Embedded Redis - https://mvnrepository.com/artifact/it.ozimov/embedded-redis
+	testImplementation group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
 }
 
 tasks.named('test') {

@@ -6,8 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.time.Duration;
 
@@ -15,12 +15,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
 @Slf4j
-@SpringBootTest
-public class RedisServiceTest {
+@SpringBootTest(classes = TestRedisConfiguration.class)
+public class RedisServiceTest_Embedded {
 
     final String KEY = "key";
     final String VALUE = "value";
-    final Duration DURATION = Duration.ofMillis(5000);
+    final Duration DURATION = Duration.ofMillis(3000);
 
     @Autowired
     private RedisService redisService;
