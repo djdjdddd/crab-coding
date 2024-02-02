@@ -1,76 +1,91 @@
 package com.coding.crab.api.redis;
 
+import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Redis에 저장, 조회, 삭제하는 메서드를 구현하는 클래스. RedisTemplate를 주입받아 Redis 데이터를 조작한다.
+ * Redis에 저장, 조회, 삭제하는 메서드를 구현한 클래스. StringRedisTemplate를 주입받아 Redis 데이터를 조작한다.
  * @author 김용희
+ * @See StringRedisTemplate
  */
 @Slf4j
-@Component
+@Service
 @RequiredArgsConstructor
 public class RedisService {
 
     private final StringRedisTemplate stringRedisTemplate;
 
-    // key와 data를 Redis에 저장한다. 만약 데이터에 만료 시간을 설정하고 싶다면 세 번째 파라미터로 Duration 객체를 전달한다.
-    public  void setValues(String key, String data){
-        ValueOperations values = stringRedisTemplate.opsForValue();
-        values.set(key, data);
+//    @Resource(name = "redisTemplate") // @Resource는 빈 이름을 통해 주입을 받는 어노테이션
+//    private ValueOperations<String, String> valueOperations;
+
+    /**
+     * key, value를 Redis에 저장합니다.
+     * @param key
+     * @param value
+     */
+    public void setValues(String key, String value){
+        ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
+        valueOperations.set(key, value);
     }
 
-    public void setValues(String key, String data, Duration duration){
-        ValueOperations values = stringRedisTemplate.opsForValue();
-        values.set(key, data, duration);
+    /**
+     * key, value, duration(만료시간)을 Redis에 저장합니다.
+     * @param key
+     * @param value
+     * @param duration 만료시간
+     */
+    public void setValues(String key, String value, Duration duration){
+        ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
+        valueOperations.set(key, value, duration);
     }
 
-    // key 파라미터로 받아 key를 기반으로 데이터를 조회한다.
-    @Transactional(readOnly = true) // DB 트랜잭션에서 단순히 select(읽기)만 하는 경우에 readOnly = true 속성을 주면 성능에 조금이라도 이점을 얻을 수 있다고 한다.
+    /**
+     * key를 기반으로 value를 조회합니다.
+     * @param key
+     * @return 데이터 존재시 value 리턴. 없을시 null 리턴
+     */
+    @Transactional(readOnly = true) // cf. DB 트랜잭션에서 단순히 select(읽기)만 하는 경우에 readOnly = true 속성을 주면 성능에 조금이라도 이점을 얻을 수 있다고 한다.
     public String getValues(String key){
-        ValueOperations values = stringRedisTemplate.opsForValue();
-        if(values.get(key) == null){
-            return "false"; // 이거 좀 맘에 안드는데
+        ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
+        String value = valueOperations.get(key);
+
+        if(!StringUtils.hasLength(value)){
+            return null; // ** "false"보다 더 괜찮은 리턴값 없나..?
         }
-        return (String) values.get(key);
+        return value;
     }
 
-    // key를 파라미터로 받아 key를 기반으로 데이터를 삭제한다.
-    public void deleteValues(String key){
-        stringRedisTemplate.delete(key);
+    /**
+     * key를 기반으로 values를 삭제합니다.
+     * @param key
+     * @return 삭제되었다면 true
+     */
+    public Boolean deleteValues(String key){
+        return stringRedisTemplate.delete(key);
     }
 
-    public void expireValues(String key, int timeout){
-        stringRedisTemplate.expire(key, timeout, TimeUnit.MILLISECONDS);
+    /**
+     * 특정 key에 대한 TTL(Time to Live)을 설정합니다.
+     * @param key @NonNull
+     * @param timeout TTL(Time to Live, 유효기간)
+     * @param unit @NonNull TTL에 대한 unit(e.g. TimeUnit.MILLISECONDS)을 지정
+     * @return 
+     */
+    public Boolean expireValues(String key, int timeout, @NonNull TimeUnit unit){
+        return stringRedisTemplate.expire(key, timeout, unit);
     }
 
-    // 조회하려는 데이터가 없으면 “false”를 반환한다.
-    public boolean checkExistsValue(String value){
-        return !value.equals("false");
-    }
-
-    // 이건 어디다 쓰는 거지?
-    public void setHashOps(String key, Map<String, String> data){
-        HashOperations<String, Object, Object> values = stringRedisTemplate.opsForHash();
-        values.putAll(key, data);
-    }
-
-    public String getHashOps(String key, String hashKey){
-        HashOperations<String, Object, Object> values = stringRedisTemplate.opsForHash();
-        return Boolean.TRUE.equals(values.hasKey(key, hashKey)) ? (String) stringRedisTemplate.opsForHash().get(key, hashKey) : "";
-    }
-
-    public void deleteHashOps(String key, String hashkey){
-        HashOperations<String, Object, Object> values = stringRedisTemplate.opsForHash();
-        values.delete(key, hashkey);
-    }
 }
