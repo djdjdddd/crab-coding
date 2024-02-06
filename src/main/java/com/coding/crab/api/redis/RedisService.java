@@ -14,6 +14,7 @@ import org.springframework.util.StringUtils;
 
 import java.time.Duration;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -58,14 +59,11 @@ public class RedisService {
      * @return 데이터 존재시 value 리턴. 없을시 null 리턴
      */
     @Transactional(readOnly = true) // cf. DB 트랜잭션에서 단순히 select(읽기)만 하는 경우에 readOnly = true 속성을 주면 성능에 조금이라도 이점을 얻을 수 있다고 한다.
-    public String getValues(String key){
+    public Optional<String> getValues(String key){
         ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
         String value = valueOperations.get(key);
 
-        if(!StringUtils.hasLength(value)){
-            return null; // ** "false"보다 더 괜찮은 리턴값 없나..?
-        }
-        return value;
+        return Optional.ofNullable(value); // null일 수도 있기 때문에 Optional을 리턴
     }
 
     /**
