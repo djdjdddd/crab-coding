@@ -1,0 +1,186 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+            crossorigin="anonymous"></script>
+    <script>
+        $(function(){
+            // 1. 인증 요청
+            const btnAuthRequest = $("#btn-auth-request");
+            const mail = $("#mail");
+            btnAuthRequest.click(()=>{
+                if(mail.val().trim() === ""){
+                    console.log(mail.val());
+                    alert("메일을 입력해주세요");
+                    return;
+                }
+
+                const data = {
+                    mail:mail.val()
+                };
+                console.log(mail.val());
+                $.ajax({
+                    url:"/signup/auth-request"
+                    ,method:"POST"
+                    ,data:JSON.stringify(data)
+                    ,dataType:"json"
+                    ,contentType:"application/json"
+                    ,success:(res)=>{
+                        console.log(res);
+                        if(res === "MEMBER_EXISTS"){
+                            alert('이미 가입한 메일입니다.');
+                        }
+                    }
+                    ,error:(err)=>{
+                        console.log(err);
+                    }
+                })
+            });
+
+            // 2. 메일 인증
+            const btnMailAuth = $("#btn-mail-auth");
+            const authenticationCode = $("#authenticationCode");
+            btnMailAuth.click(()=>{
+                if(authenticationCode.val().trim() === ""){
+                    console.log(authenticationCode.val());
+                    alert("인증코드를 입력해주세요");
+                    return;
+                }
+
+                const data = {
+                    mail:mail.val()
+                    ,authenticationCode:authenticationCode.val()
+                };
+                console.log(authenticationCode.val());
+                $.ajax({
+                    url:"/signup/mail-auth"
+                    ,method:"POST"
+                    ,data:JSON.stringify(data)
+                    ,dataType:"json"
+                    ,contentType:"application/json"
+                    ,success:(res)=>{
+                        console.log(res);
+                        if(res === "SUCCESS"){
+                            alert('인증 완료');
+                            btnRegister.prop('disabled', false); // 인증완료시 회원가입 버튼 활성화
+                        }else if(res === "FAIL"){
+                            alert('인증 실패');
+                        }
+                    }
+                    ,error:(err)=>{
+                        console.log(err);
+                    }
+                })
+            })
+
+            // 3. 회원가입
+            const btnRegister = $("#btn-register");
+            btnRegister.prop('disabled', true); // 비활성화 -> 메일 인증 완료시 회원가입 버튼 활성화 됨.
+            btnRegister.click(()=>{
+                // form 데이터를 serialize하여 JSON으로 변환
+                const formSignup = $("#form-signup")
+                var formData = formSignup.serializeArray();
+                var jsonObj = {};
+                // serializeArray로 얻은 배열을 JSON 객체로 변환
+                $.each(formData, function() {
+                    if (jsonObj[this.name]) {
+                        if (!jsonObj[this.name].push) {
+                            jsonObj[this.name] = [jsonObj[this.name]];
+                        }
+                        jsonObj[this.name].push(this.value || '');
+                    } else {
+                        jsonObj[this.name] = this.value || '';
+                    }
+                });
+                // 변환된 JSON 로그로 출력
+                console.log(JSON.stringify(jsonObj));
+
+                const boolean = confirm("회원가입 하시겠습니까?");
+                if(boolean){
+                    $.ajax({
+                        url:"/signup/register"
+                        ,method:"POST"
+                        ,data:JSON.stringify(jsonObj)
+                        ,dataType:"json"
+                        ,contentType:"application/json"
+                        ,success:(res)=>{
+                            console.log(res);
+                            if(res === "SUCCESS"){
+                                location.href="/";
+                            }else if(res === "FAIL"){
+                                alert('회원가입 실패'); // 실패할 수가 있나..?
+                            }
+                        }
+                        ,error:(err)=>{
+                            console.log(err);
+                        }
+                    })
+                }
+            })
+        });
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>회원가입 폼</h2>
+    </div>
+    <h4 class="mb-3">회원정보 입력</h4>
+    <!--<form action="/signup/register" method="post">-->
+    <form id="form-signup">
+        <div>
+            <label for="name">이름</label>
+            <input type="text" id="name" name="name" class="form-control" required placeholder="이름을 입력하세요">
+        </div>
+        <div>
+            <label for="mail">메일</label>
+            <input type="email" id="mail" name="mail" class="form-control" required placeholder="메일을 입력하세요">
+            <input type="button" value="인증 요청" id="btn-auth-request" class="w-100 btn btn-primary btn-dark">
+        </div>
+        <div>
+            <label for="authenticationCode">인증코드</label>
+            <input type="text" id="authenticationCode" name="authenticationCode" class="form-control" placeholder="인증코드 6자리">
+            <input type="button" value="메일 인증" id="btn-mail-auth" class="w-100 btn btn-secondary btn-dark">
+        </div>
+        <div>
+            <label for="nickname">닉네임</label>
+            <input type="text" id="nickname" name="nickname" class="form-control" placeholder="닉네임을 입력하세요">
+        </div>
+        <div>
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="비밀번호를 입력하세요">
+        </div>
+        <!--<div>
+            <label for="password">비밀번호 확인</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="수량을 입력하세요">
+        </div>-->
+        <div>
+            <label for="phoneNo">핸드폰 번호</label>
+            <input type="text" id="phoneNo" name="phoneNo" class="form-control" placeholder="핸드폰 번호">
+        </div>
+        <div>
+            <label for="address">주소</label>
+            <input type="text" id="address" name="address" class="form-control" placeholder="주소">
+        </div>
+        <hr class="my-4">
+        <div class="row">
+        <div class="col">
+            <!--<button id="btn-register" class="w-100 btn btn-primary btn-lg" type="submit">회원가입</button>-->
+            <input type="button" value="회원가입" id="btn-register" class="w-100 btn btn-primary btn-lg">
+        </div>
+        <div class="col">
+            <button id="back" class="w-100 btn btn-secondary btn-lg" onclick="location.href='/index.html'" type="button">뒤로</button>
+        </div>
+        </div>
+    </form>
+</div> <!-- /container -->
+</body>
+</html>
