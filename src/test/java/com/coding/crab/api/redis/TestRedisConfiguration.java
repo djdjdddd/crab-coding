@@ -11,7 +11,10 @@ public class TestRedisConfiguration {
     private RedisServer redisServer;
 
     public TestRedisConfiguration(RedisProperties redisProperties){
-        this.redisServer = new RedisServer(redisProperties.getRedisPort());
+        this.redisServer = RedisServer.builder()
+            .port(redisProperties.getRedisPort())
+            .setting("maxmemory 128M")
+            .build();
     }
 
     @PostConstruct
