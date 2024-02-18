@@ -37,6 +37,7 @@ public class SignupController {
     public String authRequest(@RequestBody MailDTO mailDTO){ // **MailDTO를 SignupRequestDTO로 바꿔줘도 될듯
         log.info("인증 요청 버튼 누름");
         log.info("mailDTO = {}", mailDTO);
+
         signupService.sendAuthCodeMail(mailDTO);
 
 //        return "MEMBER_EXISTS"; // 적절한 Code를 리턴하게끔
