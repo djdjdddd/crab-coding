@@ -70,6 +70,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	// Spring Dev Tools
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	// Bean Validation (스프링 부트 2.3 버전 이상부터는 이 validation 의존성을 따로 추가해줘야 @Valid 기능을 사용할 수 있다고...)
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 }
 
 tasks.named('test') {
