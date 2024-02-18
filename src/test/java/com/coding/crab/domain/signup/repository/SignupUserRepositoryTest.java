@@ -28,7 +28,7 @@ class SignupUserRepositoryTest {
                 .name("김용희")
                 .password("1")
                 .mail("djdjdddd@khu.ac.kr")
-                .nickname("쓰용")
+                .username("쓰용")
                 .phoneNo("01012345678")
                 .address("동대문구")
                 .build();
@@ -44,6 +44,10 @@ class SignupUserRepositoryTest {
     @Test
     @DisplayName("메일 중복 체크")
     void checkDuplicatedMail(){
+
+
+
+
         // given
         String mail = "test@test.com";
 
